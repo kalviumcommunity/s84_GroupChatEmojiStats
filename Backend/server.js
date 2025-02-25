@@ -1,32 +1,21 @@
-require("dotenv").config();
 const express = require("express");
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
+const routes = require("./routes"); // Import routes
+require("dotenv").config(); // Load environment variables (if using .env)
 
 const app = express();
-const PORT = 3000;
+const PORT = 3010;
 
-const client = new MongoClient(process.env.MONGO_URI);
+app.use(express.json()); // Middleware to parse JSON
+app.use("/api", routes); // 👈 Mounts routes under "/api"
 
-async function connectDB() {
-    try {
-        await client.connect();
-        console.log("Database connected successfully");
-    } catch (error) {
-        console.error("Database connection failed:", error.message);
-    }
-}
-
-connectDB();
-
-app.get("/", (req, res) => {
-    const dbStatus = client.topology?.isConnected() ? "Connected" : "Not Connected";
-    res.send(`<h1>Database Status: ${dbStatus}</h1>`);
-});
-
-app.get("/ping", (req, res) => {
-    res.send("Pong!");
-});
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/emojisDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log("Connected to MongoDB"))
+.catch(err => console.log("MongoDB connection error:", err));
 
 app.listen(PORT, () => {
-    console.log(`Hi, my name is Aryaman Panwar. Server is running at http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
