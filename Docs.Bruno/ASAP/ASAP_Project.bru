@@ -1,0 +1,19 @@
+meta {
+  name: ASAP_Project
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3010/api/emojis
+  body: json
+  auth: none
+}
+
+body:json {
+      { "userId": "user123",
+       "emoji": "😂", 
+       "count": 15 
+      }
+  
+}
