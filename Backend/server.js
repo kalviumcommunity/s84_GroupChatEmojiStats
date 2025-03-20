@@ -43,3 +43,4 @@ app.get('/ping', (req, res) => {
 
 // Use the routes from emojiroutes.js
 app.use('/api', emojiRoutes);
+
