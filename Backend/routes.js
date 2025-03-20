@@ -3,7 +3,7 @@ const router = express.Router();
 const Emoji = require('./schema');
 
 // Get most used emojis for a user
-router.get('/emojis/:userId', async (req, res) => {
+router.get('/emojis', async (req, res) => {
     try {
         const emojis = await Emoji.find({ userId: req.params.userId }).sort({ count: -1 });
         res.json(emojis);
