@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const emojiRoutes = require('./emojiroutes'); // Replace with your actual routes file
+const emojiRoutes = require('./routes');
 const cors = require('cors');
 
 const app = express();
@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://s84-group-chat-emoji-stats.netlify.app/'], // Update with your frontend URL
+    origin: ['http://localhost:5173', 'https://s84-group-chat-emoji-stats.netlify.app/'], 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -43,3 +43,4 @@ app.get('/ping', (req, res) => {
 
 // Use the routes from emojiroutes.js
 app.use('/api', emojiRoutes);
+
