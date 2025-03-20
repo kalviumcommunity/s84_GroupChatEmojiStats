@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const emojiRoutes = require('./emojiroutes'); // Replace with your actual routes file
+const emojiRoutes = require('./routes'); // Replace with your actual routes file
 const cors = require('cors');
 
 const app = express();
