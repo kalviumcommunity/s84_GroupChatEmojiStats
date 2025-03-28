@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://your-backend-url.com'; // Replace with your actual backend URL
+const API_BASE_URL = 'https://.com'; // Replace with your actual backend URL
 
 export const getEmojis = async () => {
     try {
