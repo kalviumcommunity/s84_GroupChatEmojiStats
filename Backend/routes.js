@@ -5,12 +5,13 @@ const Emoji = require('./schema');
 // Get most used emojis for a user
 router.get('/emojis', async (req, res) => {
     try {
-        const emojis = await Emoji.find({ userId: req.params.userId }).sort({ count: -1 });
+        const emojis = await Emoji.find().sort({ count: -1 }); // Get all emojis sorted by count (most used first)
         res.json(emojis);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 // Add or update an emoji
 router.post('/emojis', async (req, res) => {
