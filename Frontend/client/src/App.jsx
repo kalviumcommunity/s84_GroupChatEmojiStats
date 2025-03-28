@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import EmojiStats from "./components/EmojiStats.jsx";
+import { getEmojis } from "./api.js"; // Import API function
 
-// Login Component
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
 
@@ -36,10 +36,11 @@ const Login = ({ onLogin }) => {
   );
 };
 
-// Main App Component
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const [emojis, setEmojis] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.title = "GroupChatEmojiStats";
@@ -55,6 +56,27 @@ const App = () => {
     setIsLoggedIn(false);
   };
 
+  const handleFetchEmojis = async () => {
+    setLoading(true);
+    try {
+      console.log("Fetching emojis...");
+      
+      const data = await getEmojis();
+      console.log("Fetched Emojis:", data); // Debugging
+      
+      if (!Array.isArray(data)) {
+        console.error("API did not return an array:", data);
+        return;
+      }
+  
+      setEmojis(data);
+    } catch (error) {
+      console.error("Error fetching emojis:", error);
+    }
+    setLoading(false);
+  };
+  
+
   return (
     <div className="app-container">
       {!isLoggedIn ? (
@@ -64,6 +86,22 @@ const App = () => {
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
           <h2>Welcome, {username}! 🎉</h2>
           <p>Your most frequently used emojis will appear here soon.</p>
+
+          {/* Fetch Data Button */}
+          <button className="fetch-btn" onClick={handleFetchEmojis}>
+            {loading ? "Loading..." : "Fetch Emoji Data"}
+          </button>
+
+          {/* Display Fetched Emojis */}
+          {emojis.length > 0 ? (
+            <ul>
+              {emojis.map((emoji) => (
+                <li key={emoji._id}>{emoji.emoji} - {emoji.count}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No emojis found. Try adding some!</p>
+          )}
 
           {/* New Feature: Recent Emoji Stats */}
           <EmojiStats />

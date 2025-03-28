@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://.com'; // Replace with your actual backend URL
+const API_BASE_URL = 'https://s84-groupchatemojistats-2.onrender.com'; // Replace with your actual backend URL
 
 export const getEmojis = async () => {
     try {
